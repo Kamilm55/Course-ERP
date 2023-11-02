@@ -28,7 +28,7 @@ public class CourseErpBackendApplication implements CommandLineRunner {
 				.status(UserStatus.ACTIVE)
 				.build();
 
-		user.setId(1L);
+//		user.setId(1L);
 
 
 		System.out.println(user);
