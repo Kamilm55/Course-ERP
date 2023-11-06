@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5500/course_erp_db
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+#  security:
+#    jwt:
+#      public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApSq5dvYasXa1+/jn/lv7ECkQVnNmOXqR60TDvHNaiv3jY2j2QTFBaSHPFDUgXvKCgQatzRHH6sWX+lezpkhZCmbTDRpwXep6EhN0vIs18JvRvNTb6Mu6QcwR2Gsc+72oht1Xhfw9WQm7wug2uy4DBOI+FZkvmDFxoS5DZJ1wh9G8QXLEOYq/tTjgcl0tAXD1L/om4SIW0FPj0jWNXt+KsjFd/FjwzHTHt7N+VJFshiYlbSPGvEQxW0Zen8Y0DjiTgVjclanBY9nv1hsRHUo4dXKi1bj5M1S+syvCr9I1+ZRIMtcYnaRkwuKt+3wXpyR58ktqgqLARqPctl7kuHCXKwIDAQAB
+#      private-key: MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQClKrl29hqxdrX7+Of+W/sQKRBWc2Y5epHrRMO8c1qK/eNjaPZBMUFpIc8UNSBe8oKBBq3NEcfqxZf6V7OmSFkKZtMNGnBd6noSE3S8izXwm9G81Nvoy7pBzBHYaxz7vaiG3VeF/D1ZCbvC6Da7LgME4j4VmS+YMXGhLkNknXCH0bxBcsQ5ir+1OOByXS0BcPUv+ibhIhbQU+PSNY1e34qyMV38WPDMdMe3s35UkWyGJiVtI8a8RDFbRl6fxjQOOJOBWNyVqcFj2e/WGxEdSjh1cqLVuPkzVL6zK8Kv0jX5lEgy1xidpGTC4q37fBenJHnyS2qCosBGo9y2XuS4cJcrAgMBAAECggEAG16VFS17BuVRCswYRYIgfHERkAHXcrbo7z+Z3+SNoHKp95MxG2R6Hl3H3uVe090D2zWsH0tPAYx0vrtBvdBHUP3xAz7aV/W+/LfUpFm9On3Xp57uQglgd/7FBkPZra2j+5U6J63AzLxcLNQmHaZmQazr9NBJnsKyva7Y5Bdiyl6mrQeq1u0yQpBiIMjoAF18ohK9a2KDq7mHbVa/6cZiFKH107WW9rpuuyxCOMlvJGoG0LHe3uRHvABQIV5UuZLjq51axz3jc9mWo9h56efM18PmEPVKCawqbZGNTwxe68tyCbk3hYDK5O+B4nErHnqqVWuR5/tBDbllb6aUWJlOoQKBgQDcziEg8khKcW/YkB9XugUXGAIxdDFR8P2Oy5J+KuNBeb5PvpDWU66E3XK5xNVCshOLv8+r7/9gHAcpS+bsR6cV/jG6sBiw/zNksY2bu6Dph0pwvX+hnw1O2xAKUbmmr+MzQVzLDaQleRnuIjDggengAly2TlK6SC/VoG9yz+Sp5QKBgQC/fkuzV0nI6BJ3l02PqYsN6NZ/UrqrFASB72Pa2/U3tKEzQiH+dblnNgWdT9BX5KPrvYfJUANpbRI6eVeL2yICTyyjoIeqbHPBm/IerAQ7/PF2t9+x7zfIP4vDqxeSBLWQh/vUVaCgdiN8MjuGvD2xmi1UOgl4KEK7uPbMut7rzwKBgQCbyzEizvBk3i8dbWs/+beXuM/rVuFpwJEXTNm6/cXFMAIwv/Pv1bGAe8N0Aca7PWx/IUKFPVxB0uTWpYB03IWvBeDOqWtyj04S0RhqdnOt8lB6xaolPlUke3qQ3WMRkm7LfmXbu29DJXQ/So6UCfYboW8LDq5eU4q0v3ODXd4oZQKBgQCf78soOeJtg69Q5TUppTB36J2mcCFqm+h74caj2AzCfwIYPscHsamtk4gy8KORlWx3i7AqqsJ+vlN4NTqym86W4SvmakCFTdmMvkQF7CQJOmUug7q48ZTEkpaYUYD5OyeuVHU3zmC/RIy0wXvIN9bLTHtJmsOn8PBzu7OeIQHpLwKBgQC6aUG/kzgPqudkmiH2Lp73piGFHTXtAwqmvKIvXemZN7ZO1YLhAbJWMsjYnOEGKy/tlZ1XwzfGh66QgHgx9cc7tOgsPHLwoinOf6L3zFEHplqlRvhXcH0a+oQCIYpi4NOJFwMkf6eHAZmksBu2p0ZllnjRTvpaPrNQzic9I9s1Hw==
+#      access-token-validity-time: 1800000
+#      refresh-token-validity-time: 86400000
+
+server:
+  error:
+    include-message: always
