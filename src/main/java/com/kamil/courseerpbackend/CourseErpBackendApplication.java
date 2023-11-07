@@ -28,14 +28,14 @@ public class CourseErpBackendApplication implements CommandLineRunner {
 	@Autowired
 	private RoleRepository roleRepository;
 
-//	@Value("${security.jwt.public-key}")
-//	public String key;
+	@Value("${security.jwt.public-key}")
+	public String key;
 
 	@Override
 	public void run(String... args) throws Exception {
-//		System.out.println(key);
+		System.out.println(key);
 
-
+//
 //		KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("RSA");
 //		keyGenerator.initialize(2048);
 //		KeyPair kp = keyGenerator.genKeyPair();
