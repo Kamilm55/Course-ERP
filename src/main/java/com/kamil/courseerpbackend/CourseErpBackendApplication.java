@@ -1,41 +1,44 @@
 package com.kamil.courseerpbackend;
 
-import com.kamil.courseerpbackend.model.entity.Role;
 import com.kamil.courseerpbackend.model.entity.User;
-import com.kamil.courseerpbackend.model.enums.UserStatus;
-import com.kamil.courseerpbackend.repository.RoleRepository;
-import com.kamil.courseerpbackend.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import com.kamil.courseerpbackend.model.properties.security.SecurityProperties;
+import com.kamil.courseerpbackend.service.security.AccessTokenManager;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.util.Base64;
-
 @SpringBootApplication
+@RequiredArgsConstructor
 public class CourseErpBackendApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(CourseErpBackendApplication.class, args);
 	}
 
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private RoleRepository roleRepository;
 
-	@Value("${security.jwt.public-key}")
-	public String key;
+
+	private final AccessTokenManager accessTokenManager;
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println(key);
-
+//		User user = User.builder()
+//				.name("Kamil")
+//				.email("Kamil@gmail.commm")
+//				.build();
 //
+//		user.setId(1L);
+
+//		String token = accessTokenManager.generate(user);
+//		System.out.println(token);
+//
+//		//read token
+//		String email = accessTokenManager.read(token).get("email", String.class);
+//
+//		System.out.println(email);
+//
+
+
+
 //		KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("RSA");
 //		keyGenerator.initialize(2048);
 //		KeyPair kp = keyGenerator.genKeyPair();
@@ -53,21 +56,21 @@ public class CourseErpBackendApplication implements CommandLineRunner {
 
 	}
 
-	private static String convertToPrivateKey(String key) {
-		StringBuilder result = new StringBuilder();
-		result.append("-----BEGIN PRIVATE KEY-----\n");
-		result.append(key);
-		result.append("\n-----END PRIVATE KEY-----");
-		return result.toString();
-	}
-
-	private static String convertToPublicKey(String key) {
-		StringBuilder result = new StringBuilder();
-		result.append("-----BEGIN PUBLIC KEY-----\n");
-		result.append(key);
-		result.append("\n-----END PUBLIC KEY-----");
-		return result.toString();
-
+//	private static String convertToPrivateKey(String key) {
+//		StringBuilder result = new StringBuilder();
+//		result.append("-----BEGIN PRIVATE KEY-----\n");
+//		result.append(key);
+//		result.append("\n-----END PRIVATE KEY-----");
+//		return result.toString();
+//	}
+//
+//	private static String convertToPublicKey(String key) {
+//		StringBuilder result = new StringBuilder();
+//		result.append("-----BEGIN PUBLIC KEY-----\n");
+//		result.append(key);
+//		result.append("\n-----END PUBLIC KEY-----");
+//		return result.toString();
+//
 
 //		Role role1 = Role.builder()
 //				.name("NewRole")
@@ -97,4 +100,3 @@ public class CourseErpBackendApplication implements CommandLineRunner {
 //		userRepository.save(user);
 //		System.out.println(user.getId());
 	}
-}
