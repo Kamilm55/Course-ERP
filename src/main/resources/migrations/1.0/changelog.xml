@@ -5,6 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.7.xsd">
 
-<include file="migrations/1.0/1.0.0-user-table.xml" />
-<include file="migrations/1.0/1.0.1-roles-table.xml" />
+    <include file="migrations/1.0/1.0.0-user-table.xml" />
+    <include file="migrations/1.0/1.0.1-roles-table.xml" />
+    <include file="migrations/1.0/1.0.2-alter-role-table.xml" />
 </databaseChangeLog>

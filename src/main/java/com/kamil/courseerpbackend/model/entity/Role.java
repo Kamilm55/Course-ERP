@@ -15,6 +15,6 @@ import lombok.experimental.FieldDefaults;
 @Table(name = "roles")
 public class Role extends BaseEntity{
     String name;
-//    Long ownerId;
+    Long ownerId;
     String description;
 }

@@ -1,8 +1,13 @@
 package com.kamil.courseerpbackend;
 
+import com.kamil.courseerpbackend.model.entity.Role;
 import com.kamil.courseerpbackend.model.entity.User;
+import com.kamil.courseerpbackend.model.enums.UserStatus;
 import com.kamil.courseerpbackend.model.properties.security.SecurityProperties;
+import com.kamil.courseerpbackend.repository.RoleRepository;
+import com.kamil.courseerpbackend.repository.UserRepository;
 import com.kamil.courseerpbackend.service.security.AccessTokenManager;
+import com.kamil.courseerpbackend.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,87 +21,43 @@ public class CourseErpBackendApplication implements CommandLineRunner {
 	}
 
 
-
-	private final AccessTokenManager accessTokenManager;
+	private final UserService userService;
 
 	@Override
 	public void run(String... args) throws Exception {
-//		User user = User.builder()
-//				.name("Kamil")
-//				.email("Kamil@gmail.commm")
-//				.build();
-//
-//		user.setId(1L);
+		User user = User.builder()
+				.name("Samir")
+				.surname("Memmedov")
+				.phone_number("5556955")
+				.email("kamilmmdov432@gmail.com")
+				.password("sdad")
+				.roleId(8L)
+				.status(UserStatus.ACTIVE)
+				.build();
 
-//		String token = accessTokenManager.generate(user);
-//		System.out.println(token);
-//
-//		//read token
-//		String email = accessTokenManager.read(token).get("email", String.class);
-//
-//		System.out.println(email);
-//
+		userService.insertUser(user);
 
-
-
-//		KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("RSA");
-//		keyGenerator.initialize(2048);
-//		KeyPair kp = keyGenerator.genKeyPair();
-//		PublicKey publicKey = kp.getPublic();
-//		PrivateKey privateKey = kp.getPrivate();
-//
-//		String encodedPublicKey = Base64.getEncoder().encodeToString(publicKey.getEncoded());
-//		String encodedPrivateKey = Base64.getEncoder().encodeToString(privateKey.getEncoded());
-//
-//		System.out.println(convertToPublicKey(encodedPublicKey));
-//
-//		System.out.println();
-//
-//		System.out.println(convertToPrivateKey(encodedPrivateKey));
-
-	}
-
-//	private static String convertToPrivateKey(String key) {
-//		StringBuilder result = new StringBuilder();
-//		result.append("-----BEGIN PRIVATE KEY-----\n");
-//		result.append(key);
-//		result.append("\n-----END PRIVATE KEY-----");
-//		return result.toString();
-//	}
-//
-//	private static String convertToPublicKey(String key) {
-//		StringBuilder result = new StringBuilder();
-//		result.append("-----BEGIN PUBLIC KEY-----\n");
-//		result.append(key);
-//		result.append("\n-----END PUBLIC KEY-----");
-//		return result.toString();
-//
+		System.out.println(userService.getUserByEmail("kamilmmdov432@gmail.com"));
 
 //		Role role1 = Role.builder()
 //				.name("NewRole")
 //				.description("sdasdkal")
-////				.ownerId(1L)
 //				.build();
+//
+//
 //
 //		roleRepository.save(role1);
+
+
+
 //
-//		User user = User.builder()
-//				.name("Kamil")
-//				.surname("Memmedov")
-//				.phone_number("558397202")
-//				.email("kamilmmdov2@gmail.com")
-//				.password("sdad")
-////				.roleId(1L)
-//				.status(UserStatus.ACTIVE)
-//				.build();
+//		user.setId(1L);
 //
-////		user.setId(1L);
-//
-//		user.setRoleId(role1.getId());
-//
-//		System.out.println(user);
-//
-//		System.out.println(user.getId());
+
+
 //		userRepository.save(user);
-//		System.out.println(user.getId());
+
+
+
+	}
 	}
