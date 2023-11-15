@@ -37,7 +37,7 @@ public class CourseErpBackendApplication implements CommandLineRunner {
 
 //		userService.insertUser(user);
 
-		System.out.println(userService.getUserByEmail("kamilmmdov432@gmail.com"));
+//		System.out.println(userService.getUserByEmail("kamilmmdov432@gmail.com"));
 
 //		Role role1 = Role.builder()
 //				.name("NewRole")
