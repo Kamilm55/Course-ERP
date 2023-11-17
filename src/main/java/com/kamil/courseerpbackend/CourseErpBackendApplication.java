@@ -29,8 +29,8 @@ public class CourseErpBackendApplication implements CommandLineRunner {
 				.name("Samir")
 				.surname("Memmedov")
 				.phone_number("5556955")
-				.email("kamilmmdov432@gmail.com")
-				.password("sdad")
+				.email("kamilmmdov2@gmail.com")
+				.password("sdad") // used password encoder in insert method in service
 				.roleId(8L)
 				.status(UserStatus.ACTIVE)
 				.build();

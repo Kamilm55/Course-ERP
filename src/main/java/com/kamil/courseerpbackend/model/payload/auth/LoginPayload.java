@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LoginPayload {
-    String name;
     String email;
+    String password;
     boolean rememberMe;
 }

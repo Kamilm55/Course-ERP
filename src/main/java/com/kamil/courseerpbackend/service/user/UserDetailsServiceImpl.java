@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         // todo: authorities is empty list , we must change this authorities(roles) list
-        User user = userService.getUserByEmail(username); // Check there is user with this email
+        User user = userService.getUserByEmail(username); // fetch details of user from db
 
         if(user!=null){
             return new LoggedInUserDetails(user.getEmail(),user.getPassword(),new ArrayList<>());

@@ -36,12 +36,13 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
             LoggedInUserDetails userDetails = (LoggedInUserDetails) userDetailsService.loadUserByUsername(email);
 
+            System.out.println("works 1");
 //     set user details to security context
             SecurityContextHolder.getContext().setAuthentication(
                     new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities())
             );
-            // read this ->https://stackoverflow.com/questions/75643336/basic-username-and-password-check-instead-of-spring-security
-            // explore : in spring security email password matching is done implicitly?
+
+            System.out.println("SecurityContextHolder - de yoxlanir implicitly");
         }
 
         filterChain.doFilter(request,response);//if we don't call this method request don't go to the controller we are not able to show result,

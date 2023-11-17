@@ -56,7 +56,10 @@ public class SecurityConfig {
                     //   Auth URLs
                     request.requestMatchers("/v1/auth/logout").authenticated();
                     request.requestMatchers("/v1/auth/**").anonymous();
-                    request.requestMatchers("/test/**").permitAll();
+
+                    // test url
+                    request.requestMatchers("/test/auth").authenticated();
+                    request.requestMatchers("/test/no-auth").permitAll();
                 })
                 .addFilterBefore(authorizationFilter , UsernamePasswordAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
