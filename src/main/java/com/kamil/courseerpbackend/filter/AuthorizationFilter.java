@@ -24,10 +24,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
-        // todo: Complete filter logic , now  it accepts all requests
-
-
+        // This approach assumes that the token itself is a valid proof of authentication!
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         if(token != null && token.startsWith("Bearer ")){
             String accToken = token.substring(7);
@@ -36,13 +33,10 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
             LoggedInUserDetails userDetails = (LoggedInUserDetails) userDetailsService.loadUserByUsername(email);
 
-            System.out.println("works 1");
 //     set user details to security context
             SecurityContextHolder.getContext().setAuthentication(
                     new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities())
             );
-
-            System.out.println("SecurityContextHolder - de yoxlanir implicitly");
         }
 
         filterChain.doFilter(request,response);//if we don't call this method request don't go to the controller we are not able to show result,
