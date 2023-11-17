@@ -44,9 +44,10 @@ public class SecurityConfig {
 
         return http
                 .authorizeHttpRequests(request -> {
+                    // Learn:
                     //  .antMatchers("/secured-endpoint").authenticated()
-                   //   .antMatchers("/public-endpoint").permitAll()
-                    // .anonymous() vs permitALL() -> Spring Security’s anonymous authentication just gives you a more convenient way to configure your access-control attributes.
+                    //  .antMatchers("/public-endpoint").permitAll()
+                    //  .anonymous() vs permitALL() -> Spring Security’s anonymous authentication just gives you a more convenient way to configure your access-control attributes.
 
                    // Swagger UI -> permit all swagger sub-path , for ex: "/swagger-ui/" ,"/swagger-ui/index.html" ,"/swagger-ui/api-docs" etc.
                     request.requestMatchers("/v3/api-docs/**","/swagger-ui/**").permitAll();

@@ -53,9 +53,11 @@ public class AuthController {
         try{
             authenticationManager.authenticate(
                     //todo: add authorities to constructor as 3rd parameter
-                    /// This check is there any user with this credentials or not
+                    //Learn:
+                    // This check is there any user with this credentials or not
                     // this is my payload password:request.getPassword()
-                    // and in config we set UserDetails which is fetched from db , there is also my (userDetails) password associated with this username(email)
+                    // and in config we set UserDetails which is fetched from db ,
+                    // there is also my (userDetails) password associated with this username(email)
                     new UsernamePasswordAuthenticationToken(request.getEmail() ,request.getPassword())
             );
         }
