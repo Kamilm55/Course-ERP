@@ -11,7 +11,13 @@
     - if we have token we cannot send request  getting new one (for this refresh path-> .anonymous())
     - if we logout from the app , invalid tokens 
   ### 2. Refactor
-- [ ] Create constants package and add prefix bearer or others
-- [ ] Refactor authorizationFilter 
+- [x] Create constants package and add prefix bearer or others
+- [x] Refactor authorizationFilter 
   ### 3. Logout
-- 
+- [x] create only controller that send custom response
+- [ ] COMPLETE logout logic
+  ### 4. Response Model
+- [x] add meta(field) as a class in baseResponse model
+- ### 5. Exception Handling
+- [ ] create global exception structure , return response if error throws
+- [ ] refactor code

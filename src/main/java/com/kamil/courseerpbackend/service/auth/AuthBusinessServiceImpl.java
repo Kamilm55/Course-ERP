@@ -5,6 +5,7 @@ import com.kamil.courseerpbackend.model.entity.User;
 import com.kamil.courseerpbackend.model.payload.auth.LoginPayload;
 import com.kamil.courseerpbackend.model.payload.auth.RefreshTokenPayload;
 import com.kamil.courseerpbackend.model.response.auth.LoginResponse;
+import com.kamil.courseerpbackend.model.security.LoggedInUserDetails;
 import com.kamil.courseerpbackend.service.security.AccessTokenManager;
 import com.kamil.courseerpbackend.service.security.RefreshTokenManager;
 import com.kamil.courseerpbackend.service.user.UserService;
@@ -14,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +27,7 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
     private final UserService userService;
     private final AccessTokenManager accessTokenManager;
     private final RefreshTokenManager refreshTokenManager;
+    private final UserDetailsService userDetailsService;
 
     @Override
     public LoginResponse login(LoginPayload payload) {
@@ -47,6 +51,16 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
 
         return prepareLoginResponse(user,payload.isRememberMe());
 
+    }
+
+    @Override
+    public void setAuthentication(String email) {
+        LoggedInUserDetails userDetails = (LoggedInUserDetails) userDetailsService.loadUserByUsername(email);
+
+//     set user details to security context
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities())
+        );
     }
 
     // refactorThis:

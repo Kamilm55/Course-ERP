@@ -15,6 +15,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+import static com.kamil.courseerpbackend.constants.TokenConstants.EMAIL_KEY;
+import static com.kamil.courseerpbackend.constants.TokenConstants.REFRESH_TOKEN_TYPE;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -26,8 +29,8 @@ public class RefreshTokenManager implements TokenGenerator<RefreshTokenDto> ,Tok
         User user = obj.getUser();
 
         Claims claims = Jwts.claims();
-        claims.put("email" ,user.getEmail() );
-        claims.put("type" , "REFRESH_TOKEN");
+        claims.put(EMAIL_KEY,user.getEmail() );
+        claims.put("type" , REFRESH_TOKEN_TYPE);
 
         Date now = new Date();
         Date expDate = new Date(now.getTime() + securityProperties.getJwt().getRefreshTokenValidityTime(obj.isRememberMe()) );
@@ -51,7 +54,7 @@ public class RefreshTokenManager implements TokenGenerator<RefreshTokenDto> ,Tok
                 .parseClaimsJws(token)
                 .getBody();
 
-        if(!"REFRESH_TOKEN".equals(claims.get("type"))){
+        if(!REFRESH_TOKEN_TYPE.equals(claims.get("type"))){
             //refactorThis: custom exception
             throw new RuntimeException("This is not refresh token");
         }

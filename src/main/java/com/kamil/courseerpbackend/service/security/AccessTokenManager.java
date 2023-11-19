@@ -14,6 +14,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+import static com.kamil.courseerpbackend.constants.TokenConstants.EMAIL_KEY;
+import static com.kamil.courseerpbackend.constants.TokenConstants.REFRESH_TOKEN_TYPE;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -22,7 +25,7 @@ public class AccessTokenManager implements TokenGenerator<User> , TokenReader<Cl
     @Override
     public String generate(User obj) {
         Claims claims = Jwts.claims();
-        claims.put("email" ,obj.getEmail() );
+        claims.put(EMAIL_KEY ,obj.getEmail() );
 
         Date now = new Date();
         Date expDate = new Date(now.getTime() + securityProperties.getJwt().getAccessTokenValidityTime() );
@@ -45,7 +48,7 @@ public class AccessTokenManager implements TokenGenerator<User> , TokenReader<Cl
                 .getBody();
 
         if (claims.containsKey("type") ){
-            if(claims.get("type").equals("REFRESH_TOKEN")){
+            if(claims.get("type").equals(REFRESH_TOKEN_TYPE)){
             //refactorThis: custom exception
             throw new RuntimeException("This is refresh token , you must send access token");
             }

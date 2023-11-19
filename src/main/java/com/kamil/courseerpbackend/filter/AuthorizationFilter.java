@@ -1,6 +1,6 @@
 package com.kamil.courseerpbackend.filter;
 
-import com.kamil.courseerpbackend.model.security.LoggedInUserDetails;
+import com.kamil.courseerpbackend.service.auth.AuthBusinessService;
 import com.kamil.courseerpbackend.service.security.AccessTokenManager;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -9,19 +9,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+import static com.kamil.courseerpbackend.constants.TokenConstants.EMAIL_KEY;
+import static com.kamil.courseerpbackend.constants.TokenConstants.TOKEN_PREFIX;
+
 @Component
 @RequiredArgsConstructor
 public class AuthorizationFilter extends OncePerRequestFilter {
     private final AccessTokenManager accessTokenManager;
-    private final UserDetailsService userDetailsService;
+    private final AuthBusinessService authBusinessService;
 
     //Learn:
     // Token Authorization Logic:
@@ -34,17 +34,12 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // This approach assumes that the token itself is a valid proof of authentication!
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if(token != null && token.startsWith("Bearer ")){
-            String accToken = token.substring(7);
-            Claims claims = accessTokenManager.read(accToken);
-            String email = claims.get("email", String.class);
 
-            LoggedInUserDetails userDetails = (LoggedInUserDetails) userDetailsService.loadUserByUsername(email);
+        if(token != null && token.startsWith(TOKEN_PREFIX)){
+            Claims claims = accessTokenManager.read( token.substring(7));
+            String email = claims.get(EMAIL_KEY, String.class);
 
-//     set user details to security context
-            SecurityContextHolder.getContext().setAuthentication(
-                    new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities())
-            );
+            authBusinessService.setAuthentication(email);
         }
 
         filterChain.doFilter(request,response);

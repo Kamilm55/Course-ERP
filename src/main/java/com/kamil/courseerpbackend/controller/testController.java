@@ -17,8 +17,7 @@ public class testController {
 
         return BaseResponse.success(userDetails.getUsername());
     }
-
-
+    
     @GetMapping("/no-auth")
     public BaseResponse<String> noAuth() {
         return BaseResponse.success("Works NO - AUTH");

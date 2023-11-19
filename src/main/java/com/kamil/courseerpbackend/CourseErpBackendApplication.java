@@ -1,12 +1,5 @@
 package com.kamil.courseerpbackend;
 
-import com.kamil.courseerpbackend.model.entity.Role;
-import com.kamil.courseerpbackend.model.entity.User;
-import com.kamil.courseerpbackend.model.enums.UserStatus;
-import com.kamil.courseerpbackend.model.properties.security.SecurityProperties;
-import com.kamil.courseerpbackend.repository.RoleRepository;
-import com.kamil.courseerpbackend.repository.UserRepository;
-import com.kamil.courseerpbackend.service.security.AccessTokenManager;
 import com.kamil.courseerpbackend.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +18,7 @@ public class CourseErpBackendApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
 //		User user = User.builder()
 //				.name("Samir")
 //				.surname("Memmedov")
