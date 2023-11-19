@@ -38,10 +38,19 @@ public class AccessTokenManager implements TokenGenerator<User> , TokenReader<Cl
 
     @Override
     public Claims read(String token) {
-        return Jwts.parserBuilder()
+        Claims claims = Jwts.parserBuilder()
                 .setSigningKey(PublicPrivateKeyUtil.getPublicKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+
+        if (claims.containsKey("type") ){
+            if(claims.get("type").equals("REFRESH_TOKEN")){
+            //refactorThis: custom exception
+            throw new RuntimeException("This is refresh token , you must send access token");
+            }
+        }
+
+        return claims;
     }
 }
