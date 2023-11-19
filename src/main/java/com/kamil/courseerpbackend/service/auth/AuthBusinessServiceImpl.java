@@ -1,13 +1,14 @@
 package com.kamil.courseerpbackend.service.auth;
 
-import com.kamil.courseerpbackend.model.base.BaseResponse;
 import com.kamil.courseerpbackend.model.dto.RefreshTokenDto;
 import com.kamil.courseerpbackend.model.entity.User;
 import com.kamil.courseerpbackend.model.payload.auth.LoginPayload;
+import com.kamil.courseerpbackend.model.payload.auth.RefreshTokenPayload;
 import com.kamil.courseerpbackend.model.response.auth.LoginResponse;
 import com.kamil.courseerpbackend.service.security.AccessTokenManager;
 import com.kamil.courseerpbackend.service.security.RefreshTokenManager;
 import com.kamil.courseerpbackend.service.user.UserService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,18 +31,37 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
 
         User user = userService.getUserByEmail(payload.getEmail());
 
-        return     LoginResponse.builder()
-                        .accessToken(accessTokenManager.generate(user))
-                        .refreshToken(refreshTokenManager.generate(
-                                RefreshTokenDto.builder().rememberMe(payload.isRememberMe()).user(user).build()
-                        ))
-                    .build();
-//                        .userInfo()
-        //todo: add user info
+        return prepareLoginResponse(user,payload.isRememberMe());
 
     }
 
-    // private util method
+    @Override
+    public LoginResponse refresh(RefreshTokenPayload payload) {
+        //Learn:
+        // i should return "valid" access token and refresh token because you need access token for authorization
+        // you give me refresh token and i give these
+            Claims claims = refreshTokenManager.read(payload.getRefreshToken());
+            String email = claims.get("email", String.class);
+
+            User user = userService.getUserByEmail(email);
+
+        return prepareLoginResponse(user,payload.isRememberMe());
+
+    }
+
+    // refactorThis:
+    //  private util methods
+    private LoginResponse prepareLoginResponse(User user , boolean rememberMe){
+        return     LoginResponse.builder()
+                .accessToken(accessTokenManager.generate(user))
+                .refreshToken(refreshTokenManager.generate(
+                        RefreshTokenDto.builder().rememberMe(rememberMe).user(user).build()
+                ))
+                //.userInfo()
+                .build();
+        //todo: add user info
+    }
+
     private void authenticate(LoginPayload request){
 
         try{

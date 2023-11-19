@@ -44,10 +44,18 @@ public class RefreshTokenManager implements TokenGenerator<RefreshTokenDto> ,Tok
 
     @Override
     public Claims read(String token) {
-        return Jwts.parserBuilder()
+
+        Claims claims = Jwts.parserBuilder()
                 .setSigningKey(PublicPrivateKeyUtil.getPublicKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+
+        if(!"REFRESH_TOKEN".equals(claims.get("type"))){
+            //refactorThis: custom exception
+            throw new RuntimeException("This is not refresh token");
+        }
+
+        return claims;
     }
 }
