@@ -1,5 +1,6 @@
 package com.kamil.courseerpbackend.service.user;
 
+import com.kamil.courseerpbackend.exception.BaseException;
 import com.kamil.courseerpbackend.model.entity.User;
 import com.kamil.courseerpbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getUserByEmail(String email) {
-        return userRepository.findUserByEmail(email).orElseThrow( () -> new RuntimeException("Not Found User with this email"));
+        return userRepository.findUserByEmail(email).orElseThrow(
+                () -> BaseException.notFound(User.class.getSimpleName() , "email" , email)
+        );
     }
 
     @Override

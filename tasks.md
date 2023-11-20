@@ -18,6 +18,9 @@
 - [ ] COMPLETE logout logic
   ### 4. Response Model
 - [x] add meta(field) as a class in baseResponse model
-- ### 5. Exception Handling
-- [ ] create global exception structure , return response if error throws
-- [ ] refactor code
+  ### 5. Exception Handling
+- [x] create global exception structure , return response if error throws
+- [x] refactor code
+- [x] create success response message refactor current code
+- [x] create notFoundExceptionType enum 
+- [ ] make it customizable response -> %s can't find for %s , (user can't find for {email="kasjdnk@gmail.com"}) 
