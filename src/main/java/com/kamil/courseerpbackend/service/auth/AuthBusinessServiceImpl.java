@@ -1,9 +1,12 @@
 package com.kamil.courseerpbackend.service.auth;
 
+import com.kamil.courseerpbackend.exception.BaseException;
 import com.kamil.courseerpbackend.model.dto.RefreshTokenDto;
 import com.kamil.courseerpbackend.model.entity.User;
+import com.kamil.courseerpbackend.model.enums.response.ExceptionResponseMessages;
 import com.kamil.courseerpbackend.model.payload.auth.LoginPayload;
 import com.kamil.courseerpbackend.model.payload.auth.RefreshTokenPayload;
+import com.kamil.courseerpbackend.model.payload.auth.register.RegisterPayload;
 import com.kamil.courseerpbackend.model.response.auth.LoginResponse;
 import com.kamil.courseerpbackend.model.security.LoggedInUserDetails;
 import com.kamil.courseerpbackend.service.security.AccessTokenManager;
@@ -18,6 +21,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+
+import static com.kamil.courseerpbackend.model.enums.response.ExceptionResponseMessages.USER_ALREADY_REGISTERED;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +56,18 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
 
         return prepareLoginResponse(user,payload.isRememberMe());
 
+    }
+
+    @Override
+    public void register(RegisterPayload payload) {
+
+        boolean existsUser = userService.existsUserByEmail(payload.getEmail());
+
+        if(existsUser){
+         throw  BaseException.of(USER_ALREADY_REGISTERED);
+        }
+
+        log.info("You can register , email does not exist before");
     }
 
     @Override

@@ -39,4 +39,11 @@ public class BaseException extends RuntimeException{
                 )
                 .build();
     }
+    // Custom exception (generic type)
+    public static BaseException of(ResponseMessages responseMessages){
+        return BaseException.builder()
+                .responseMessages(responseMessages)
+                .build();
+    }
+
 }

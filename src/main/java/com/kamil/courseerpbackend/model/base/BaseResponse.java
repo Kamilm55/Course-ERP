@@ -53,15 +53,14 @@ public class BaseResponse<T>{
         private static Meta of(BaseException exception){
 
             if(exception.getResponseMessages().equals(NOT_FOUND)){
-                String formattedKey = String.format(exception.getResponseMessages().getKey(), exception.getNotFoundData().getTarget());
-                String formattedMessage = String.format(exception.getResponseMessages().getMessage(),exception.getNotFoundData().getFields());
-                System.out.println(formattedKey + "  " + formattedMessage);
-                log.info((formattedKey + "  " + formattedMessage));
+                // Learn: key and message are setted already in response messages we replace with formatted versions.
+                String formattedKey = String.format(exception.getResponseMessages().getKey(), exception.getNotFoundData().getTarget().toLowerCase());
+                String formattedMessage = String.format(exception.getResponseMessages().getMessage(),exception.getNotFoundData().getTarget().toLowerCase(),exception.getNotFoundData().getFields());
 
-                return Meta.builder()
-                        .key(formattedKey)
-                        .message(formattedMessage)
-                        .build();
+                return of(
+                        formattedKey,
+                        formattedMessage
+                );
             }
 
             return of(
@@ -89,6 +88,7 @@ public class BaseResponse<T>{
                 .data(null)
                 .build();
     }
+
 
     public static <T> BaseResponse<T> error(BaseException baseException){
 

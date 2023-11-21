@@ -23,4 +23,16 @@
 - [x] refactor code
 - [x] create success response message refactor current code
 - [x] create notFoundExceptionType enum 
-- [ ] make it customizable response -> %s can't find for %s , (user can't find for {email="kasjdnk@gmail.com"}) 
+- [x] make it customizable response -> %s can't find for %s , (user can't find for {email="kasjdnk@gmail.com"}) 
+- [x] Create new exception type user_already_registered , refactor exception code it should be accept custom message
+ and display its own key and message
+
+  ### 6. Register
+- [x] create simple controller and service , then check user exist or not
+- [ ] convert registerPayload to User for registering use -> mapStruct add maven dependencies
+- [ ] create service that get OWNER role with static method
+- [ ] test , if re-register does it throw an error?
+
+  ### 7. Migrations
+- [x] create course table 
+- [x] insert default value for OWNER in role table

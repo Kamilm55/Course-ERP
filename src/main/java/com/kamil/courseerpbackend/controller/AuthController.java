@@ -3,6 +3,7 @@ package com.kamil.courseerpbackend.controller;
 import com.kamil.courseerpbackend.model.base.BaseResponse;
 import com.kamil.courseerpbackend.model.payload.auth.LoginPayload;
 import com.kamil.courseerpbackend.model.payload.auth.RefreshTokenPayload;
+import com.kamil.courseerpbackend.model.payload.auth.register.RegisterPayload;
 import com.kamil.courseerpbackend.model.response.auth.LoginResponse;
 import com.kamil.courseerpbackend.service.auth.AuthBusinessService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,13 @@ public class AuthController {
     @PostMapping("/refresh") //Learn: it is also login , but with access token not credentials
     public BaseResponse<LoginResponse> refresh(@RequestBody RefreshTokenPayload payload){
         return BaseResponse.success(authBusinessService.refresh(payload));
+    }
+
+    @PostMapping("/register")
+    public BaseResponse<Void> register(@RequestBody RegisterPayload payload){
+        authBusinessService.register(payload);
+
+        return BaseResponse.success();
     }
 
     @PostMapping("/logout")

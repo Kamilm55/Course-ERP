@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 @FieldDefaults(level = AccessLevel.PRIVATE , makeFinal = true)
 public enum ExceptionResponseMessages implements ResponseMessages {
     UNEXPECTED("unexpected" , "Unexpected error:",HttpStatus.INTERNAL_SERVER_ERROR),
-    NOT_FOUND("not_found_%s" , "%s cannot find in %s" , HttpStatus.NOT_FOUND);
+    NOT_FOUND("not_found_%s" , "%s cannot find in %s" , HttpStatus.NOT_FOUND),
+    USER_ALREADY_REGISTERED("user_already_registered" , "user already registered with this email" , HttpStatus.CONFLICT)
+    ;
 
     //Learn:
     // after this sign ; we can say it is class
