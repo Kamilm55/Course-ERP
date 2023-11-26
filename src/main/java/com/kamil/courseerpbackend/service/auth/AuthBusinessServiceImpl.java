@@ -67,6 +67,8 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
          throw  BaseException.of(USER_ALREADY_REGISTERED);
         }
 
+
+
         log.info("You can register , email does not exist before");
     }
 
