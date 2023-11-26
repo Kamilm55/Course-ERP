@@ -31,7 +31,7 @@
 - [x] create simple controller and service , then check user exist or not
 - [ ] convert registerPayload to User for registering use -> mapStruct add maven dependencies
 - [ ] create service that get OWNER role with static method
-- [ ] test , if re-register does it throw an error?
+- [ ] test , if re-register does it throw an error
 
   ### 7. Migrations
 - [x] create course table 
