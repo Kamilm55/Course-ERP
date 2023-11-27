@@ -28,6 +28,6 @@ public class User extends BaseEntity{
     UserStatus status;
     Long roleId;
     String email;
-    String phone_number;
+    String phoneNumber;
     String password;
 }

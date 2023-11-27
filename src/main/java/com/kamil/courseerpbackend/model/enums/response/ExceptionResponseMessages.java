@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 public enum ExceptionResponseMessages implements ResponseMessages {
     UNEXPECTED("unexpected" , "Unexpected error:",HttpStatus.INTERNAL_SERVER_ERROR),
     NOT_FOUND("not_found_%s" , "%s cannot find in %s" , HttpStatus.NOT_FOUND),
-    USER_ALREADY_REGISTERED("user_already_registered" , "user already registered with this email" , HttpStatus.CONFLICT)
+    USER_ALREADY_REGISTERED("user_already_registered" , "user already registered with this %s : %s" , HttpStatus.CONFLICT)
     ;
 
     //Learn:

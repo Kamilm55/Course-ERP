@@ -29,9 +29,11 @@
 
   ### 6. Register
 - [x] create simple controller and service , then check user exist or not
-- [ ] convert registerPayload to User for registering , use -> mapStruct add maven dependencies
-- [ ] create service that get OWNER role with static method
-- [ ] test => re-register ,  does it throw an error
+- [x] convert registerPayload to User for registering , use -> mapStruct add maven dependencies
+- [x] create service that get OWNER role with static method
+- [x] test => re-register ,  does it throw an error
+- [ ] phoneNumber must be unique if the same throw err -> "message": "user already registered with this phone_number"
+- [ ] create response message that can be dynamic it check registered with email:example@gmail.com or  phone_number:121451
 
   ### 7. Migrations
 - [x] create course table 

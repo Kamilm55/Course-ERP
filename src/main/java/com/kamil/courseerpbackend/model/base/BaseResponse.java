@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
 import static com.kamil.courseerpbackend.model.enums.response.ExceptionResponseMessages.NOT_FOUND;
+import static com.kamil.courseerpbackend.model.enums.response.ExceptionResponseMessages.USER_ALREADY_REGISTERED;
 import static com.kamil.courseerpbackend.model.enums.response.SuccessResponseMessages.SUCCESS;
 
 @Data
@@ -52,10 +53,18 @@ public class BaseResponse<T>{
 
         private static Meta of(BaseException exception){
 
+            //refactorThis:
             if(exception.getResponseMessages().equals(NOT_FOUND)){
                 // Learn: key and message are setted already in response messages we replace with formatted versions.
                 String formattedKey = String.format(exception.getResponseMessages().getKey(), exception.getNotFoundData().getTarget().toLowerCase());
                 String formattedMessage = String.format(exception.getResponseMessages().getMessage(),exception.getNotFoundData().getTarget().toLowerCase(),exception.getNotFoundData().getFields());
+
+                return of(
+                        formattedKey,
+                        formattedMessage
+                );
+            } else if (exception.getResponseMessages().equals(USER_ALREADY_REGISTERED)) {
+               //todo: Format response messages
 
                 return of(
                         formattedKey,

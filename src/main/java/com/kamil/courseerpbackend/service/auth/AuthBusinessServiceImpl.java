@@ -4,11 +4,13 @@ import com.kamil.courseerpbackend.exception.BaseException;
 import com.kamil.courseerpbackend.model.dto.RefreshTokenDto;
 import com.kamil.courseerpbackend.model.entity.User;
 import com.kamil.courseerpbackend.model.enums.response.ExceptionResponseMessages;
+import com.kamil.courseerpbackend.model.mapper.UserEntityMapper;
 import com.kamil.courseerpbackend.model.payload.auth.LoginPayload;
 import com.kamil.courseerpbackend.model.payload.auth.RefreshTokenPayload;
 import com.kamil.courseerpbackend.model.payload.auth.register.RegisterPayload;
 import com.kamil.courseerpbackend.model.response.auth.LoginResponse;
 import com.kamil.courseerpbackend.model.security.LoggedInUserDetails;
+import com.kamil.courseerpbackend.service.role.RoleService;
 import com.kamil.courseerpbackend.service.security.AccessTokenManager;
 import com.kamil.courseerpbackend.service.security.RefreshTokenManager;
 import com.kamil.courseerpbackend.service.user.UserService;
@@ -20,6 +22,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static com.kamil.courseerpbackend.model.enums.response.ExceptionResponseMessages.USER_ALREADY_REGISTERED;
@@ -30,9 +34,11 @@ import static com.kamil.courseerpbackend.model.enums.response.ExceptionResponseM
 public class AuthBusinessServiceImpl implements AuthBusinessService{
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
+    private final RoleService roleService;
     private final AccessTokenManager accessTokenManager;
     private final RefreshTokenManager refreshTokenManager;
     private final UserDetailsService userDetailsService;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public LoginResponse login(LoginPayload payload) {
@@ -62,14 +68,21 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
     public void register(RegisterPayload payload) {
 
         boolean existsUser = userService.existsUserByEmail(payload.getEmail());
+        boolean existsUserByPhoneNumber = userService.existsUserByPhoneNumber(payload.getPhoneNumber());
 
         if(existsUser){
          throw  BaseException.of(USER_ALREADY_REGISTERED);
+        } else if (existsUserByPhoneNumber) {
+            throw BaseException.of(USER_ALREADY_REGISTERED)
         }
 
+        User user = UserEntityMapper.INSTANCE.fromRegisterPayloadToUser(
+                payload,
+                bCryptPasswordEncoder.encode(payload.getPassword()),
+                roleService.getDefaultRole().getId()
+        );
+        userService.insertUser(user);
 
-
-        log.info("You can register , email does not exist before");
     }
 
     @Override

@@ -1,14 +1,14 @@
 package com.kamil.courseerpbackend.exception;
 
 import com.kamil.courseerpbackend.exception.types.NotFoundExceptionType;
+import com.kamil.courseerpbackend.exception.types.UserAlreadyRegisteredWithType;
 import com.kamil.courseerpbackend.model.enums.response.ResponseMessages;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Map;
 
-import static com.kamil.courseerpbackend.model.enums.response.ExceptionResponseMessages.NOT_FOUND;
-import static com.kamil.courseerpbackend.model.enums.response.ExceptionResponseMessages.UNEXPECTED;
+import static com.kamil.courseerpbackend.model.enums.response.ExceptionResponseMessages.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -19,6 +19,7 @@ import static com.kamil.courseerpbackend.model.enums.response.ExceptionResponseM
 public class BaseException extends RuntimeException{
     ResponseMessages responseMessages;
     NotFoundExceptionType notFoundData;
+    UserAlreadyRegisteredWithType userAlreadyRegisteredWithData;
 
     @Override
     public String getMessage() {
@@ -36,6 +37,14 @@ public class BaseException extends RuntimeException{
                 .responseMessages(NOT_FOUND)
                 .notFoundData(
                         NotFoundExceptionType.of(target, Map.of(field,value))
+                )
+                .build();
+    }
+    public static BaseException userAlreadyRegistered(String field, Object value){
+        return BaseException.builder()
+                .responseMessages(USER_ALREADY_REGISTERED)
+                .userAlreadyRegisteredWithData(
+                        UserAlreadyRegisteredWithType.of(Map.of(field,value))
                 )
                 .build();
     }
