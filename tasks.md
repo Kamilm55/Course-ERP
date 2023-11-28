@@ -37,9 +37,16 @@
 - [x] create mapstruct for payload to course
 - [x] insert course (with default values and payload info)
 - [x] create Branch and insert default branch info
+- [x] insert employee as default
 - ### some unexpected actions:
   - [ ] i can insert same name courses (how can i differentiate) ?
+  - [ ] when user sign up employees_branches relation not change
+  
 
-      ### 7. Migrations
+  ### 7. Migrations
 - [x] create course table 
 - [x] insert default value for OWNER in role table
+- [x] create students and countries table
+- [x] alter employee table , drop constraint and create additional table that keep 2 keys and type of emp
+
+  ### 8. Project tasks from github

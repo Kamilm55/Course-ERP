@@ -4,6 +4,7 @@ import com.kamil.courseerpbackend.exception.BaseException;
 import com.kamil.courseerpbackend.model.dto.RefreshTokenDto;
 import com.kamil.courseerpbackend.model.entity.Branch;
 import com.kamil.courseerpbackend.model.entity.Course;
+import com.kamil.courseerpbackend.model.entity.Employee;
 import com.kamil.courseerpbackend.model.entity.User;
 import com.kamil.courseerpbackend.model.enums.BranchStatus;
 import com.kamil.courseerpbackend.model.enums.response.ExceptionResponseMessages;
@@ -16,6 +17,7 @@ import com.kamil.courseerpbackend.model.response.auth.LoginResponse;
 import com.kamil.courseerpbackend.model.security.LoggedInUserDetails;
 import com.kamil.courseerpbackend.service.branch.BranchService;
 import com.kamil.courseerpbackend.service.course.CourseService;
+import com.kamil.courseerpbackend.service.employee.EmployeeService;
 import com.kamil.courseerpbackend.service.role.RoleService;
 import com.kamil.courseerpbackend.service.security.AccessTokenManager;
 import com.kamil.courseerpbackend.service.security.RefreshTokenManager;
@@ -45,6 +47,7 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
     private final RoleService roleService;
     private final CourseService courseService;
     private final BranchService branchService;
+    private final EmployeeService employeeService;
     private final AccessTokenManager accessTokenManager;
     private final RefreshTokenManager refreshTokenManager;
     private final UserDetailsService userDetailsService;
@@ -100,9 +103,10 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
 
         // Insert default Branch
         // make relation with course fk
-        Branch branch = populateDefaultBranch(course,payload);
-        branchService.insert(branch);
+        branchService.insert(populateDefaultBranch(course,payload));
 
+        // Insert employee
+        employeeService.insert(Employee.builder().userId(user.getId()).build());
     }
 
 
