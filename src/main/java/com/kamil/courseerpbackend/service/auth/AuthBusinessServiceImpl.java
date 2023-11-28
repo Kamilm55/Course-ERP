@@ -2,14 +2,20 @@ package com.kamil.courseerpbackend.service.auth;
 
 import com.kamil.courseerpbackend.exception.BaseException;
 import com.kamil.courseerpbackend.model.dto.RefreshTokenDto;
+import com.kamil.courseerpbackend.model.entity.Branch;
+import com.kamil.courseerpbackend.model.entity.Course;
 import com.kamil.courseerpbackend.model.entity.User;
+import com.kamil.courseerpbackend.model.enums.BranchStatus;
 import com.kamil.courseerpbackend.model.enums.response.ExceptionResponseMessages;
+import com.kamil.courseerpbackend.model.mapper.CourseEntityMapper;
 import com.kamil.courseerpbackend.model.mapper.UserEntityMapper;
 import com.kamil.courseerpbackend.model.payload.auth.LoginPayload;
 import com.kamil.courseerpbackend.model.payload.auth.RefreshTokenPayload;
 import com.kamil.courseerpbackend.model.payload.auth.register.RegisterPayload;
 import com.kamil.courseerpbackend.model.response.auth.LoginResponse;
 import com.kamil.courseerpbackend.model.security.LoggedInUserDetails;
+import com.kamil.courseerpbackend.service.branch.BranchService;
+import com.kamil.courseerpbackend.service.course.CourseService;
 import com.kamil.courseerpbackend.service.role.RoleService;
 import com.kamil.courseerpbackend.service.security.AccessTokenManager;
 import com.kamil.courseerpbackend.service.security.RefreshTokenManager;
@@ -32,9 +38,13 @@ import static com.kamil.courseerpbackend.model.enums.response.ExceptionResponseM
 @RequiredArgsConstructor
 @Slf4j
 public class AuthBusinessServiceImpl implements AuthBusinessService{
+    private static final String BRANCH_NAME_DEFAULT_PATTERN = "%s Default Branch";
+
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final RoleService roleService;
+    private final CourseService courseService;
+    private final BranchService branchService;
     private final AccessTokenManager accessTokenManager;
     private final RefreshTokenManager refreshTokenManager;
     private final UserDetailsService userDetailsService;
@@ -71,11 +81,12 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
         boolean existsUserByPhoneNumber = userService.existsUserByPhoneNumber(payload.getPhoneNumber());
 
         if(existsUser){
-         throw  BaseException.of(USER_ALREADY_REGISTERED);
+         throw  BaseException.userAlreadyRegistered("email",payload.getEmail());
         } else if (existsUserByPhoneNumber) {
-            throw BaseException.of(USER_ALREADY_REGISTERED)
+            throw BaseException.userAlreadyRegistered("phone_number",payload.getPhoneNumber());
         }
 
+        // Insert user
         User user = UserEntityMapper.INSTANCE.fromRegisterPayloadToUser(
                 payload,
                 bCryptPasswordEncoder.encode(payload.getPassword()),
@@ -83,7 +94,17 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
         );
         userService.insertUser(user);
 
+        // Insert course
+        Course course = CourseEntityMapper.INSTANCE.fromRegisterPayloadToCourse(payload);
+        courseService.insert(course);
+
+        // Insert default Branch
+        // make relation with course fk
+        Branch branch = populateDefaultBranch(course,payload);
+        branchService.insert(branch);
+
     }
+
 
     @Override
     public void setAuthentication(String email) {
@@ -97,6 +118,17 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
 
     // refactorThis:
     //  private util methods
+    private Branch populateDefaultBranch(Course course,RegisterPayload payload) {
+        // refactorThis: param should be only payload
+
+        // todo: customize fields
+        return Branch.builder()
+                .status(BranchStatus.ACTIVE)
+                .name(String.format(BRANCH_NAME_DEFAULT_PATTERN, payload.getCourseName()))
+                .courseId(course.getId())
+                .address(payload.getAddress())
+                .build();
+    }
     private LoginResponse prepareLoginResponse(User user , boolean rememberMe){
         return     LoginResponse.builder()
                 .accessToken(accessTokenManager.generate(user))

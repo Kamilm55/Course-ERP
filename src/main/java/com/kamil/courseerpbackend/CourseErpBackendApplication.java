@@ -1,5 +1,8 @@
 package com.kamil.courseerpbackend;
 
+import com.kamil.courseerpbackend.model.entity.Course;
+import com.kamil.courseerpbackend.model.mapper.CourseEntityMapper;
+import com.kamil.courseerpbackend.model.payload.auth.register.RegisterPayload;
 import com.kamil.courseerpbackend.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -18,6 +21,14 @@ public class CourseErpBackendApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
+//		RegisterPayload payload = new RegisterPayload();
+//		payload.setCourseName("new course");
+//		payload.setAddress("adress 5");
+//
+//		Course course = CourseEntityMapper.INSTANCE.fromRegisterPayloadToCourse(payload);
+//
+//		System.out.println(course);
 
 //		User user = User.builder()
 //				.name("Samir")

@@ -10,6 +10,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
+import java.util.Set;
+
 import static com.kamil.courseerpbackend.model.enums.response.ExceptionResponseMessages.NOT_FOUND;
 import static com.kamil.courseerpbackend.model.enums.response.ExceptionResponseMessages.USER_ALREADY_REGISTERED;
 import static com.kamil.courseerpbackend.model.enums.response.SuccessResponseMessages.SUCCESS;
@@ -52,12 +54,14 @@ public class BaseResponse<T>{
         }
 
         private static Meta of(BaseException exception){
+            String key = exception.getResponseMessages().getKey();
+            String message = exception.getResponseMessages().getMessage();
 
             //refactorThis:
             if(exception.getResponseMessages().equals(NOT_FOUND)){
                 // Learn: key and message are setted already in response messages we replace with formatted versions.
-                String formattedKey = String.format(exception.getResponseMessages().getKey(), exception.getNotFoundData().getTarget().toLowerCase());
-                String formattedMessage = String.format(exception.getResponseMessages().getMessage(),exception.getNotFoundData().getTarget().toLowerCase(),exception.getNotFoundData().getFields());
+                String formattedKey = String.format(key, exception.getNotFoundData().getTarget().toLowerCase());
+                String formattedMessage = String.format(message,exception.getNotFoundData().getTarget().toLowerCase(),exception.getNotFoundData().getFields());
 
                 return of(
                         formattedKey,
@@ -65,9 +69,23 @@ public class BaseResponse<T>{
                 );
             } else if (exception.getResponseMessages().equals(USER_ALREADY_REGISTERED)) {
                //todo: Format response messages
+                //refactorThis:
+
+
+                // Get the set of keys
+                Set<String> keys = exception.getUserAlreadyRegisteredWithData().getFields().keySet();
+                String formattedMessage = "";
+                // Iterate over the keys
+                for (String k : keys) {
+                    // Retrieve the value for each key
+                    Object value = exception.getUserAlreadyRegisteredWithData().getFields().get(k);
+
+                     formattedMessage = String.format(message, k,value);
+
+                }
 
                 return of(
-                        formattedKey,
+                        key,
                         formattedMessage
                 );
             }

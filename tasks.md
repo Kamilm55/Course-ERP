@@ -32,9 +32,14 @@
 - [x] convert registerPayload to User for registering , use -> mapStruct add maven dependencies
 - [x] create service that get OWNER role with static method
 - [x] test => re-register ,  does it throw an error
-- [ ] phoneNumber must be unique if the same throw err -> "message": "user already registered with this phone_number"
-- [ ] create response message that can be dynamic it check registered with email:example@gmail.com or  phone_number:121451
+- [x] phoneNumber must be unique if the same throw err -> "message": "user already registered with this phone_number"
+- [x] create response message that can be dynamic it check registered with email:example@gmail.com or  phone_number:121451
+- [x] create mapstruct for payload to course
+- [x] insert course (with default values and payload info)
+- [x] create Branch and insert default branch info
+- ### some unexpected actions:
+  - [ ] i can insert same name courses (how can i differentiate) ?
 
-  ### 7. Migrations
+      ### 7. Migrations
 - [x] create course table 
 - [x] insert default value for OWNER in role table
