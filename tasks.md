@@ -40,7 +40,7 @@
 - [x] insert employee as default
 - [ ] if user status is inactive throw forbidden error "User is not active" (check in test controller and login)
 - ### some unexpected actions:
-  - [ ] Bad credentials error when i login with right credentials 
+  - [ ] **Bad credentials error when i login with right credentials**
   - [ ] why authorization filter works every request , research and debug register , login controllers and relation with this filter
   - [ ] i can insert same name courses (how can i differentiate) ?
   - [ ] when user sign up employees_branches relation not change

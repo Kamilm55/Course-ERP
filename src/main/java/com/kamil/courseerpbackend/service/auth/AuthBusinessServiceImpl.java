@@ -51,7 +51,7 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
     private final AccessTokenManager accessTokenManager;
     private final RefreshTokenManager refreshTokenManager;
     private final UserDetailsService userDetailsService;
-    private final PasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public LoginResponse login(LoginPayload payload) {
@@ -92,7 +92,7 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
         // Insert user
         User user = UserEntityMapper.INSTANCE.fromRegisterPayloadToUser(
                 payload,
-                bCryptPasswordEncoder.encode(payload.getPassword()),
+                passwordEncoder.encode(payload.getPassword()),
                 roleService.getDefaultRole().getId()
         );
         userService.insertUser(user);
@@ -161,14 +161,14 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
         catch (AuthenticationException ex){
             // todo: add custom exception
             // todo: fix this
+            log.error(ex.getClass().getSimpleName());
             log.error(ex.getMessage());
-            log.error("cause of ex: ",ex.getCause());
 
             if(ex.getCause() instanceof BaseException)
                 throw (BaseException) ex.getCause();
             else
                 throw BaseException.unexpected();
-//            throw new RuntimeException(ex.getMessage());
+
         }
 
     }

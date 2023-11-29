@@ -39,11 +39,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         // This approach assumes that the token itself is a valid proof of authentication!
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-
-        System.out.println("ISleyr");
-
         try {
-            System.out.println("isleyr 2");
+
             if(token != null && token.startsWith(TOKEN_PREFIX)){
                 Claims claims = accessTokenManager.read( token.substring(7));
                 String email = claims.get(EMAIL_KEY, String.class);
@@ -57,7 +54,6 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         }catch (Exception ex) {
             ex.printStackTrace();
         }
-
             filterChain.doFilter(request,response);
 
         //Learn:
