@@ -145,7 +145,7 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
     }
 
     private void authenticate(LoginPayload request){
-
+        System.out.println(request.getEmail() + " " + request.getPassword());
         try{
             authenticationManager.authenticate(
                     //todo: add authorities(selahiyet) to constructor as 3rd parameter
@@ -160,7 +160,15 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
         }
         catch (AuthenticationException ex){
             // todo: add custom exception
-            throw new RuntimeException(ex);
+            // todo: fix this
+            log.error(ex.getMessage());
+            log.error("cause of ex: ",ex.getCause());
+
+            if(ex.getCause() instanceof BaseException)
+                throw (BaseException) ex.getCause();
+            else
+                throw BaseException.unexpected();
+//            throw new RuntimeException(ex.getMessage());
         }
 
     }

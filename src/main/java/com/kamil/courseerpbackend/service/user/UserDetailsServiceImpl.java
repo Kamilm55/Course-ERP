@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(user!=null){
             return new LoggedInUserDetails(user.getEmail(),user.getPassword(),new ArrayList<>());
         }else {
-            throw new RuntimeException("There is no authenticated user with this email");
+            throw new UsernameNotFoundException("There is no authenticated user with this email");
         }
 
 

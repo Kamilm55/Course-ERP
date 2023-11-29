@@ -38,7 +38,10 @@
 - [x] insert course (with default values and payload info)
 - [x] create Branch and insert default branch info
 - [x] insert employee as default
+- [ ] if user status is inactive throw forbidden error "User is not active" (check in test controller and login)
 - ### some unexpected actions:
+  - [ ] Bad credentials error when i login with right credentials 
+  - [ ] why authorization filter works every request , research and debug register , login controllers and relation with this filter
   - [ ] i can insert same name courses (how can i differentiate) ?
   - [ ] when user sign up employees_branches relation not change
   
@@ -50,3 +53,8 @@
 - [x] alter employee table , drop constraint and create additional table that keep 2 keys and type of emp
 
   ### 8. Project tasks from github
+- 
+  ### 9. OTP
+- [x] OTP service basic send function (send random uuid (4 digits))
+
+  

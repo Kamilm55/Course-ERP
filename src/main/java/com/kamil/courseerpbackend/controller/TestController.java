@@ -29,7 +29,7 @@ public class TestController {
         // refactorThis: fix this , it is just logging for exception handling
 //    throw BaseException.unexpected();
 
-        User user = userService.getUserByEmail("KAmdasil@gmail.com");
+//        User user = userService.getUserByEmail("KAmdasil@gmail.com");
 
 
         return BaseResponse.success("Works NO - AUTH");

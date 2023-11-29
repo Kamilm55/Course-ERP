@@ -3,6 +3,7 @@ package com.kamil.courseerpbackend;
 import com.kamil.courseerpbackend.model.entity.Course;
 import com.kamil.courseerpbackend.model.mapper.CourseEntityMapper;
 import com.kamil.courseerpbackend.model.payload.auth.register.RegisterPayload;
+import com.kamil.courseerpbackend.service.otp.OtpService;
 import com.kamil.courseerpbackend.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -17,10 +18,12 @@ public class CourseErpBackendApplication implements CommandLineRunner {
 	}
 
 
-	private final UserService userService;
+	private final OtpService otpService;
 
 	@Override
 	public void run(String... args) throws Exception {
+//	otpService.send();
+
 
 //		RegisterPayload payload = new RegisterPayload();
 //		payload.setCourseName("new course");
