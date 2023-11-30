@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class AuthController {
     private final AuthBusinessService authBusinessService;
-
     @PostMapping("/login")
     public BaseResponse<LoginResponse> login(@RequestBody LoginPayload payload){
         return BaseResponse.success(authBusinessService.login(payload));

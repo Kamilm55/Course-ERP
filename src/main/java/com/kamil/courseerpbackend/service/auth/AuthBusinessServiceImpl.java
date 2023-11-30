@@ -133,6 +133,7 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
                 .address(payload.getAddress())
                 .build();
     }
+    //refactorThis: use email instead of user ,then get user from userService via email
     private LoginResponse prepareLoginResponse(User user , boolean rememberMe){
         return     LoginResponse.builder()
                 .accessToken(accessTokenManager.generate(user))
@@ -146,6 +147,15 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
 
     private void authenticate(LoginPayload request){
         System.out.println(request.getEmail() + " " + request.getPassword());
+//      User user =  userService.getUserByEmail(request.getEmail());
+//      String prevEncodedPass = "$2a$10$R8n/xdt.ppIwZwRCSwj5ne2fSmZfe90N5LAvor5K93RqY57XPA54y";
+//        System.out.println(user.getPassword());
+//        String newEncodedPass = passwordEncoder.encode(request.getPassword());
+//        System.out.println(passwordEncoder.encode(request.getPassword()));
+
+//        log.info("INFO:");
+//        System.out.println(passwordEncoder.matches("string",newEncodedPass));
+//        System.out.println(passwordEncoder.matches("string",prevEncodedPass));
         try{
             authenticationManager.authenticate(
                     //todo: add authorities(selahiyet) to constructor as 3rd parameter

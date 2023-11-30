@@ -4,6 +4,7 @@ import com.kamil.courseerpbackend.model.entity.User;
 import com.kamil.courseerpbackend.model.security.LoggedInUserDetails;
 import com.kamil.courseerpbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
 //    The authentication of any request mostly depends on the implementation of the UserDetailsService interface.
 
@@ -24,6 +26,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         // todo: authorities is empty list , we must change this authorities(roles) list
         User user = userService.getUserByEmail(username); // fetch details of user from db
+
+        log.warn("USER INFO:");
+        System.out.println(user);
 
         if(user!=null){
             return new LoggedInUserDetails(user.getEmail(),user.getPassword(),new ArrayList<>());

@@ -62,3 +62,21 @@
 - Accept **RegisterPayload** and ( it can be mapstruct )
 - Use payload and create new user in db when creating use password encoder
 - Insert this user into db
+## 3. Password Encoder in Spring Security
+    // Create an instance of the PasswordEncoder (using BCrypt in this case)
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+		// User registration: Encode the password and store it in the database
+		String rawPassword = "user_password";
+		String encodedPassword1 = passwordEncoder.encode(rawPassword);
+		String encodedPassword2 = passwordEncoder.encode(rawPassword);
+
+		System.out.println("Encoded Password 1: " + encodedPassword1);
+		System.out.println("Encoded Password 2: " + encodedPassword2);
+
+		// User authentication: Check if the entered password matches the stored (encoded) password
+		boolean passwordMatches1 = passwordEncoder.matches("user_password", encodedPassword1);
+		boolean passwordMatches2 = passwordEncoder.matches("user_password", encodedPassword2);
+
+		System.out.println("Password Matches 1: " + passwordMatches1);
+		System.out.println("Password Matches 2: " + passwordMatches2);
