@@ -26,7 +26,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void insertUser(User user) {
-
         // todo: Refactor password encoder
 //        user.setPassword(passwordEncoder.encode(user.getPassword()));
         //Learn:

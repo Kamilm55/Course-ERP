@@ -90,40 +90,12 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
             throw BaseException.userAlreadyRegistered("phone_number",payload.getPhoneNumber());
         }
 
-        // Insert user
-//        User user = UserEntityMapper.INSTANCE.fromRegisterPayloadToUser(
-//                payload,
-//                passwordEncoder.encode(payload.getPassword()),
-//                roleService.getDefaultRole().getId()
-//        );
-//        {
-//            "email": "k4@gmail.com",
-//                "name": "kamil1",
-//                "address": "string",
-//                "password": "pass",
-//                "courseName": "str",
-//                "phoneNumber": "452132",
-//                "surname": "Memmedov"
-//        }
-        //refactorThis: for debug
-    log.info("REGISTER password comparisons:");
-        System.out.println(payload.getPassword());
-        String encodedPass = passwordEncoder.encode(payload.getPassword());
-        System.out.println(encodedPass);
-        // $2a$10$NseIhsTuM.mf/DUItmudy.6qGQo4Jo5hEr8cJOu/P8RubyRCh74BC
-        // $2a$10$RYF8aWjMQtaw0CJbLYY1LO0syxyyzxZEJgqkfup13rVzlcWctS6.W
-
-        System.out.println(passwordEncoder.matches(payload.getPassword(),encodedPass));
-
-        User user = User.builder()
-                .email(payload.getEmail())
-                .name(payload.getName())
-                .password(passwordEncoder.encode(payload.getPassword()))
-                .phoneNumber(payload.getPhoneNumber())
-                .surname(payload.getSurname())
-                .roleId(roleService.getDefaultRole().getId())
-                .status(UserStatus.ACTIVE)
-                .build();
+//         Insert user
+        User user = UserEntityMapper.INSTANCE.fromRegisterPayloadToUser(
+                payload,
+                passwordEncoder.encode(payload.getPassword()),
+                roleService.getDefaultRole().getId()
+        );
         userService.insertUser(user);
 
         // Insert course
@@ -142,7 +114,6 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
     @Override
     public void setAuthentication(String email) {
         LoggedInUserDetails userDetails = (LoggedInUserDetails) userDetailsService.loadUserByUsername(email);
-
 
 //     set user details to security context
         SecurityContextHolder.getContext().setAuthentication(
@@ -176,20 +147,7 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
     }
 
     private void authenticate(LoginPayload request){
-        // debug:
-        System.out.println(request.getEmail() + " " + request.getPassword());
-      User user =  userService.getUserByEmail(request.getEmail());
 
-//      String prevEncodedPass = "$2a$10$.QDobm/znPXZ2Te8VLhxv.zzGSjZOZecEVwqznYwxUOOPeQp.6dvC";
-//        System.out.println(user.getPassword());
-//        String newEncodedPass = passwordEncoder.encode(request.getPassword());
-//        System.out.println(passwordEncoder.encode(request.getPassword()));
-
-        log.info("INFO 1:\nPassword encoder works?");
-        System.out.println(passwordEncoder.matches("smth", passwordEncoder.encode("smth")));
-        log.info("INFO 2:\nPassword encoder matches with db password?");
-        System.out.println(passwordEncoder.matches("pass", user.getPassword()));
-        System.out.println(passwordEncoder.matches(request.getPassword(),user.getPassword()));
         try{
             authenticationManager.authenticate(
                     //todo: add authorities(selahiyet) to constructor as 3rd parameter
@@ -205,8 +163,6 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
         catch (AuthenticationException ex){
             // todo: add custom exception
             // todo: fix this
-            log.error(ex.getClass().getSimpleName());
-            log.error(ex.getMessage());
 
             if(ex.getCause() instanceof BaseException)
                 throw (BaseException) ex.getCause();
@@ -214,7 +170,5 @@ public class AuthBusinessServiceImpl implements AuthBusinessService{
                 throw BaseException.unexpected();
 
         }
-
     }
-
 }
