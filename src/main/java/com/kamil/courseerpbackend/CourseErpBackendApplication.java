@@ -3,8 +3,10 @@ package com.kamil.courseerpbackend;
 import com.kamil.courseerpbackend.model.entity.Course;
 import com.kamil.courseerpbackend.model.mapper.CourseEntityMapper;
 import com.kamil.courseerpbackend.model.payload.auth.register.RegisterPayload;
+import com.kamil.courseerpbackend.model.properties.security.SecurityProperties;
 import com.kamil.courseerpbackend.service.otp.OtpService;
 import com.kamil.courseerpbackend.service.user.UserService;
+import com.kamil.courseerpbackend.util.PublicPrivateKeyUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,10 +23,18 @@ public class CourseErpBackendApplication implements CommandLineRunner {
 
 
 	private final OtpService otpService;
+	private final SecurityProperties securityProperties;
 
 	@Override
 	public void run(String... args) throws Exception {
 
+//		System.out.println(securityProperties.getJwt().getPrivateKey());
+//		System.out.println(securityProperties.getJwt().getPublicKey());
+
+//		System.out.println(PublicPrivateKeyUtil.getPrivateKey());
+//
+//		System.out.println("PUblic key:");
+//		System.out.println(PublicPrivateKeyUtil.getPublicKey());
 //	otpService.send();
 
 

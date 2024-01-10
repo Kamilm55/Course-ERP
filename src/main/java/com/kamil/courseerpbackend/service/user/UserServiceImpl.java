@@ -28,7 +28,12 @@ public class UserServiceImpl implements UserService{
     public void insertUser(User user) {
 
         // todo: Refactor password encoder
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //Learn:
+        // BadCredentialsException throw for this
+        // i forget to Refactor password encoder
+
+        user.setPassword(user.getPassword());
         userRepository.save(user);
     }
 
